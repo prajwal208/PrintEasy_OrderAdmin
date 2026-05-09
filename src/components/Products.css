@@ -1,0 +1,277 @@
+.products-page {
+  background: #fdf7f5;
+  border-radius: 14px;
+  padding: 18px;
+  min-height: calc(100vh - 58px - 36px);
+}
+
+.products-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.products-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.products-subtitle {
+  margin-top: 2px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.products-state {
+  padding: 18px;
+  text-align: center;
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.products-state.error {
+  color: #b91c1c;
+}
+
+.products-retry {
+  margin-left: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  background: #f28c28;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.products-retry:hover {
+  background: #e67e22;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.product-image-wrap {
+  position: relative;
+  background: #f3f4f6;
+  height: 190px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-image-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.08), rgba(59, 130, 246, 0.10));
+}
+
+.product-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.product-body {
+  padding: 12px 14px 14px;
+  background: #fdeeee;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-sku {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.product-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.product-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.product-price-now {
+  font-size: 16px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.product-price-mrp {
+  font-size: 12px;
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+.product-status {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.product-status.active {
+  color: #2563eb;
+}
+
+.product-status.out {
+  color: #dc2626;
+}
+
+.product-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.product-icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #111827;
+}
+
+.product-icon-btn:hover {
+  background: #fff;
+}
+
+/* modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.modal-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.modal-close:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.modal-body {
+  padding: 14px;
+}
+
+.modal-product-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.modal-product-sku {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 3px;
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.modal-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.modal-btn.primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.modal-btn.primary:hover {
+  background: #1d4ed8;
+}
+
+.modal-btn.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.modal-btn.danger:hover {
+  background: #fecaca;
+}
+

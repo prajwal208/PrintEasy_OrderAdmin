@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { generatePDF, generateCombinedPDF } from '../utils/pdfGenerator';
 import './Orders.css';
 
-const Orders = ({ onLogout }) => {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -132,12 +132,6 @@ const Orders = ({ onLogout }) => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userEmail');
-    onLogout();
-  };
-
   if (loading) {
     return (
       <div className="orders-container">
@@ -159,9 +153,6 @@ const Orders = ({ onLogout }) => {
     <div className="orders-container">
       <header className="orders-header">
         <h1>Orders</h1>
-        <button onClick={handleLogout} className="logout-button">
-          Logout
-        </button>
       </header>
 
       <div className="orders-content">
