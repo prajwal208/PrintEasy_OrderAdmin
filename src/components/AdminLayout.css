@@ -1,18 +1,22 @@
 .admin-shell {
   min-height: 100vh;
   width: 100%;
-  display: grid;
-  grid-template-columns: 260px 1fr;
   background: #f7f7fb;
 }
 
 .admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
   background: #0f172a;
   color: #e5e7eb;
   display: flex;
   flex-direction: column;
   padding: 18px 14px;
   gap: 14px;
+  z-index: 30;
 }
 
 .admin-brand {
@@ -105,9 +109,14 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  margin-left: 260px;
 }
 
 .admin-topbar {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  right: 0;
   height: 58px;
   background: #ffffff;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
@@ -115,6 +124,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 18px;
+  z-index: 20;
 }
 
 .admin-topbar-title {
@@ -155,13 +165,22 @@
 }
 
 .admin-content {
-  padding: 18px;
+  padding: calc(58px + 18px) 18px 18px;
 }
 
 @media (max-width: 900px) {
-  .admin-shell {
-    grid-template-columns: 86px 1fr;
+  .admin-sidebar {
+    width: 86px;
   }
+
+  .admin-main {
+    margin-left: 86px;
+  }
+
+  .admin-topbar {
+    left: 86px;
+  }
+
   .admin-brand-subtitle,
   .admin-nav-text,
   .admin-user-email,

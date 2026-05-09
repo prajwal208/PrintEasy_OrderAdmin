@@ -7,6 +7,7 @@ const STOCK = {
 };
 
 const PRODUCTS_ENDPOINT = 'https://api.onrise.in/v2/product/all';
+const API_KEY = '454ccaf106998a71760f6729e7f9edaf1df17055b297b3008ff8b65a5efd7c10';
 
 function formatCurrency(amount) {
   if (typeof amount !== 'number') return '₹0';
@@ -43,7 +44,13 @@ export default function Products() {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch(PRODUCTS_ENDPOINT, { signal: controller.signal });
+        const token = localStorage.getItem('authToken');
+        const headers = {
+          'x-api-key': API_KEY,
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        };
+
+        const res = await fetch(PRODUCTS_ENDPOINT, { signal: controller.signal, headers });
         const json = await res.json();
 
         if (!json?.success || !Array.isArray(json?.data)) {
