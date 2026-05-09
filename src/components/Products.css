@@ -5,6 +5,35 @@
   min-height: calc(100vh - 58px - 36px);
 }
 
+.products-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10060;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.35);
+  animation: products-toast-in 0.22s ease-out;
+  max-width: min(420px, calc(100vw - 32px));
+  text-align: center;
+}
+
+@keyframes products-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 .products-header {
   display: flex;
   align-items: flex-end;
@@ -242,11 +271,201 @@
   margin-top: 3px;
 }
 
+.modal-field {
+  margin-top: 14px;
+  position: relative;
+}
+
+.modal-field-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.modal-field-label-spaced {
+  margin-top: 14px;
+}
+
+.modal-field-hint {
+  font-size: 11px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.modal-field-hint code {
+  font-size: 10px;
+  background: #f3f4f6;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.modal-detail-loading {
+  margin-top: 12px;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.modal-detail-error,
+.modal-update-error {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.modal-multiselect-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+}
+
+.modal-multiselect-trigger-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modal-multiselect-empty {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px dashed rgba(15, 23, 42, 0.18);
+  background: rgba(249, 250, 251, 0.9);
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.modal-multiselect-trigger:hover:not(:disabled) {
+  border-color: rgba(37, 99, 235, 0.35);
+}
+
+.modal-multiselect-trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.modal-multiselect-chevron {
+  font-size: 11px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+/* List is portaled to document.body; position/size come from inline styles. */
+.modal-multiselect-list {
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
+}
+
+.modal-multiselect-list-portal {
+  box-sizing: border-box;
+}
+
+.modal-multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.modal-multiselect-option:hover {
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.modal-multiselect-option input {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
 .modal-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-top: 14px;
+}
+
+.modal-stock-row {
+  margin-top: 0;
+}
+
+.modal-stock-row .modal-btn.primary.choice-selected {
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.45);
+}
+
+.modal-stock-row .modal-btn.primary.choice-dim {
+  background: #e8eef9;
+  color: #1e40af;
+}
+
+.modal-stock-row .modal-btn.danger.choice-selected {
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35);
+}
+
+.modal-stock-row .modal-btn.danger.choice-dim {
+  background: #fff5f5;
+  color: #991b1b;
+}
+
+.modal-update-wrap {
+  margin-top: 14px;
+}
+
+.modal-btn.update-submit {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  background: #111827;
+  color: #fff;
+}
+
+.modal-btn.update-submit:hover:not(:disabled) {
+  background: #0f172a;
+}
+
+.modal-btn.update-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .modal-btn {
