@@ -1,14 +1,14 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
+import { clearAuthSession, AUTH_STORAGE } from '../utils/auth';
 import './AdminLayout.css';
 
 export default function AdminLayout({ onLogout }) {
   const navigate = useNavigate();
-  const userEmail = useMemo(() => localStorage.getItem('userEmail') || '', []);
+  const userEmail = useMemo(() => localStorage.getItem(AUTH_STORAGE.userEmail) || '', []);
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userEmail');
+    clearAuthSession();
     onLogout?.();
     navigate('/login', { replace: true });
   };

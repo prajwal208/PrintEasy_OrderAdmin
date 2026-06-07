@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { getValidAuthToken } from '../utils/auth';
 import './Products.css';
 
 const STOCK = {
@@ -11,10 +12,10 @@ const PRODUCTS_ENDPOINT = 'https://api.onrise.in/v2/product/all';
 const productDetailUrl = (id) => `https://api.onrise.in/v2/product/${id}`;
 const API_KEY = '454ccaf106998a71760f6729e7f9edaf1df17055b297b3008ff8b65a5efd7c10';
 
-function authHeaders() {
-  const token = localStorage.getItem('authToken');
+async function authHeaders({ json = true } = {}) {
+  const token = await getValidAuthToken();
   return {
-    'Content-Type': 'application/json',
+    ...(json ? { 'Content-Type': 'application/json' } : {}),
     'x-api-key': API_KEY,
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
@@ -186,8 +187,7 @@ export default function Products() {
       try {
         setLoading(true);
         setError('');
-        const headers = { ...authHeaders() };
-        delete headers['Content-Type'];
+        const headers = await authHeaders({ json: false });
 
         const res = await fetch(PRODUCTS_ENDPOINT, { signal: controller.signal, headers });
         const json = await res.json();
@@ -233,8 +233,7 @@ export default function Products() {
 
     (async () => {
       try {
-        const detailHeaders = { ...authHeaders() };
-        delete detailHeaders['Content-Type'];
+        const detailHeaders = await authHeaders({ json: false });
         const res = await fetch(productDetailUrl(editingId), {
           signal: controller.signal,
           headers: detailHeaders,
@@ -369,7 +368,7 @@ export default function Products() {
 
       const res = await fetch(productDetailUrl(editingId), {
         method: 'PATCH',
-        headers: authHeaders(),
+        headers: await authHeaders(),
         body: JSON.stringify(payload),
       });
       let json = {};

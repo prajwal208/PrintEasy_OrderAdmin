@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import './Login.css';
 import logo from "../assets/light-2x.webp"
+import { persistAuthSession } from '../utils/auth';
+
+const FIREBASE_API_KEY =
+  import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyC-mvRzLqUwy4vddFlEXFvLEdiR1QvFFMk';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -16,7 +20,7 @@ const Login = ({ onLogin }) => {
 
     try {
       const response = await fetch(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC-mvRzLqUwy4vddFlEXFvLEdiR1QvFFMk',
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
         {
           method: 'POST',
           headers: {
@@ -36,9 +40,12 @@ const Login = ({ onLogin }) => {
         throw new Error(data.error?.message || 'Login failed');
       }
 
-      // Store token and user info
-      localStorage.setItem('authToken', data.idToken);
-      localStorage.setItem('userEmail', data.email);
+      persistAuthSession({
+        idToken: data.idToken,
+        refreshToken: data.refreshToken,
+        expiresIn: data.expiresIn,
+        email: data.email,
+      });
       
       onLogin(data);
     } catch (err) {

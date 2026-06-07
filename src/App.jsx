@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Orders from './components/Orders';
 import AdminLayout from './components/AdminLayout';
 import Products from './components/Products';
+import { clearAuthSession, hasStoredSession } from './utils/auth';
 import './App.css';
 
 function App() {
@@ -11,12 +12,14 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const token = localStorage.getItem('authToken');
-    if (token) {
+    if (hasStoredSession()) {
       setIsAuthenticated(true);
     }
     setLoading(false);
+
+    const onSessionExpired = () => setIsAuthenticated(false);
+    window.addEventListener('auth:session-expired', onSessionExpired);
+    return () => window.removeEventListener('auth:session-expired', onSessionExpired);
   }, []);
 
   const handleLogin = (authData) => {
@@ -24,6 +27,7 @@ function App() {
   };
 
   const handleLogout = () => {
+    clearAuthSession();
     setIsAuthenticated(false);
   };
 
