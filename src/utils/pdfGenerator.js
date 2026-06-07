@@ -99,15 +99,41 @@ const safeLoadCustomImage = async (url) => {
 };
 
 /* ================= SIZE FORMAT ================= */
-// Format size for PDF: "26Y" → "2-6Y", "46Y" → "4-6Y", "26Y 46Y" → "2-6Y 4-6Y"
-const formatSizeForPdf = (sizeInfo) => {
-  if (!sizeInfo || typeof sizeInfo !== "string") return "N/A";
-  const trimmed = sizeInfo.trim();
-  if (!trimmed) return "N/A";
+/** Encoded size codes: "46Y" → "4-6Y", "810Y" → "8-10Y" (space-separated parts supported). */
+const formatSizeCodeForPdf = (code) => {
+  if (!code || typeof code !== "string") return "";
+  const trimmed = code.trim();
+  if (!trimmed) return "";
   return trimmed
     .split(/\s+/)
     .map((part) => (part.length >= 2 ? part[0] + "-" + part.slice(1) : part))
     .join(" ");
+};
+
+/**
+ * Resolve item size for PDF from either API shape:
+ * - object: { label: "7–8Y", value: "7–8y", options: [...] }
+ * - string: "46Y"
+ */
+const formatSizeForPdf = (sizeInfo, variantSize) => {
+  const raw = sizeInfo ?? variantSize;
+  if (raw == null || raw === "") return "N/A";
+
+  if (typeof raw === "object") {
+    const label = raw.label != null ? String(raw.label).trim() : "";
+    const value = raw.value != null ? String(raw.value).trim() : "";
+    if (label) return label;
+    if (value) return formatSizeCodeForPdf(value) || value;
+    return "N/A";
+  }
+
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    if (!trimmed) return "N/A";
+    return formatSizeCodeForPdf(trimmed) || trimmed;
+  }
+
+  return "N/A";
 };
 
 /* ================= PAGE HELPERS ================= */
@@ -552,7 +578,7 @@ export const generatePDF = async (order, onProgress) => {
 
     const sku = item.sku || item.productSku || "N/A";
     const quantity = item.quantity || item.qty || 1;
-    const size = formatSizeForPdf(item.sizeInfo || item.variantSize);
+    const size = formatSizeForPdf(item.sizeInfo, item.variantSize);
     const name = item.name || "Customizable Product";
 
     doc.setFontSize(10);
@@ -787,7 +813,7 @@ export const generateCombinedPDF = async (orders, dateKey, onProgress) => {
 
       const sku = item.sku || item.productSku || "N/A";
       const quantity = item.quantity || item.qty || 1;
-      const size = formatSizeForPdf(item.sizeInfo || item.variantSize);
+      const size = formatSizeForPdf(item.sizeInfo, item.variantSize);
       const name = item.name || "Customizable Product";
 
       doc.setFontSize(10);
